@@ -20,4 +20,10 @@ export class UserService {
     );
     return await createdUser.save();
   }
+  async findAll(): Promise<any>{
+    return this.userModel.find()
+  }
+  async findOne(email: string): Promise<any>{
+    return this.userModel.findOne({email})
+  }
 }
