@@ -1,29 +1,32 @@
 import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
-import { IUser } from './user.interfase';
-import { UserDto } from './UserDto';
-import * as bcrypt from 'bcrypt';
-import * as _ from 'lodash';
+
+export type User = any;
 
 @Injectable()
 export class UserService {
-  constructor(
-    @InjectModel('SuperUser') private readonly userModel: Model<IUser>
-  ) {}
-  async create(userDro: UserDto): Promise<any> {
-    const saltRounds = 10;
-    const salt = await bcrypt.genSalt(saltRounds);
-    const hash = await bcrypt.hash(userDro.password, salt);
-    const createdUser = new this.userModel(
-      _.assignIn(userDro, { password: hash }),
-    );
-    return await createdUser.save();
+  private readonly users: User[];
+
+  constructor() {
+    this.users = [
+      {
+        userId: 1,
+        username: 'john',
+        password: 'changeme',
+      },
+      {
+        userId: 2,
+        username: 'chris',
+        password: 'secret',
+      },
+      {
+        userId: 3,
+        username: 'maria',
+        password: 'guess',
+      },
+    ];
   }
-  async findAll(): Promise<any>{
-    return this.userModel.find()
-  }
-  async findOne(email: string): Promise<any>{
-    return this.userModel.findOne({email})
+
+  async findOne(username: string): Promise<User | undefined> {
+    return this.users.find(user => user.username === username);
   }
 }

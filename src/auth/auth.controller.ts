@@ -6,6 +6,6 @@ export class AuthController {
   @UseGuards(AuthGuard('local'))
   @Post('auth/login')
   async login(@Request() req) {
-    return true;
+    return req.user;
   }
 }
