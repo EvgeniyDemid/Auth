@@ -10,7 +10,6 @@ import { AuthModule } from './auth/auth.module';
     MongooseModule.forRoot('mongodb+srv://demidof:D19021987@customers-7nq5x.mongodb.net/customers?retryWrites=true&w=majority'),
     AuthModule
   ],
-  controllers: [],
-  providers: [AuthService],
+  controllers: []
 })
 export class AppModule {}
